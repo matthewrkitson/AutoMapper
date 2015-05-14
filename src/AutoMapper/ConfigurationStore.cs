@@ -315,9 +315,9 @@ namespace AutoMapper
                 // Cache miss
                 typeMap = FindTypeMap(source, destination, sourceType, destinationType, DefaultProfileName);
 
-                //We don't want to inherit base mappings which may be ambiguous or too specific resulting in cast exceptions
-                if (source == null || source.GetType() == sourceType)
-                    _typeMapCache[typeMapPair] = typeMap;
+                // peterc note: this used not to cache if polymorphic mapping occurring, but performance was
+                //              a disaster. Our mappings seem to work fine when one always caches.
+                _typeMapCache[typeMapPair] = typeMap;
             }
             // Due to the inheritance we can have derrived mapping cached which is not valid for this source object
             else if (source != null && typeMap != null && !typeMap.SourceType.IsAssignableFrom(source.GetType()))
