@@ -160,9 +160,10 @@ namespace AutoMapper
 			SourceType = sourceType;
 			SourceValue = sourceValue;
             DestinationValue = destinationValue;
-			Parent = context;
-			DestinationType = propertyMap.DestinationProperty.MemberType;
-			InstanceCache = context.InstanceCache;
+            Parent = context;
+            var destinationMemberType = propertyMap.DestinationProperty.MemberType;
+            DestinationType = destinationMemberType == typeof(object) ? sourceType : destinationMemberType;
+            InstanceCache = context.InstanceCache;
             Options = context.Options;
             Engine = context.Engine;
         }
